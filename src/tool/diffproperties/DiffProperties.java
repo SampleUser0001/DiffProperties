@@ -61,6 +61,8 @@ public class DiffProperties {
 				String value = prop.getProperty(key);
 				if(value == null || value.equals("\r\n")){
 					value = "指定なし";
+				} else {
+					value = replace(value);
 				}
 
 				if(tmpValue == null){
@@ -105,5 +107,17 @@ public class DiffProperties {
 				charset,
 				StandardOpenOption.TRUNCATE_EXISTING);
 
+	}
+
+	/**
+	 * CR,LF,タブを"\r","\n","\t"の文字として出力できるように置換する。<br>
+	 * くそー気に入らない。
+	 * @return 置換後文字列
+	 */
+	private static String replace(String str){
+		return str
+				.replaceAll("\\r", "\\\\r")
+				.replaceAll("\\n", "\\\\n")
+				.replaceAll("\\t", "\\\\t");
 	}
 }
